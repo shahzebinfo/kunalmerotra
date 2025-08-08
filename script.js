@@ -1,11 +1,5 @@
-const imageFolder = 'image/product1/';
-const images = [
-  'A.png',
-  'B.png',
-  'C.png',
-  'D.png'
-  // Apne images ke naam yahan add karen
-];
+const imageFolder = 'images/product1/';
+const images = ['A.png', 'B.png', 'C.png', 'D.png'];
 
 const container = document.getElementById('imageScroll');
 images.forEach(imgName => {
@@ -14,4 +8,3 @@ images.forEach(imgName => {
   img.alt = 'Product Image';
   container.appendChild(img);
 });
-
