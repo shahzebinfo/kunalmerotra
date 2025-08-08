@@ -3,43 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Flipkart Style Product</title>
+  <title>Flipkart Style Product Gallery</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="product-container">
     <div class="gallery">
-      <div id="slides">
-        <img src="images/product1/A.png" alt="Product Image A" class="active" />
-        <img src="images/product1/B.png" alt="Product Image B" />
-        <img src="images/product1/C.png" alt="Product Image C" />
-        <img src="images/product1/D.png" alt="Product Image D" />
+      <div id="mainImageContainer">
+        <img id="mainImage" src="images/product1/A.png" alt="Main Product Image" />
       </div>
-      <div id="thumbs">
-        <img src="images/product1/A.png" alt="Thumb A" class="thumb active" />
-        <img src="images/product1/B.png" alt="Thumb B" class="thumb" />
-        <img src="images/product1/C.png" alt="Thumb C" class="thumb" />
-        <img src="images/product1/D.png" alt="Thumb D" class="thumb" />
+      <div id="thumbnailContainer">
+        <img class="thumb active" src="images/product1/A.png" alt="Thumb A" data-large="images/product1/A.png" />
+        <img class="thumb" src="images/product1/B.png" alt="Thumb B" data-large="images/product1/B.png" />
+        <img class="thumb" src="images/product1/C.png" alt="Thumb C" data-large="images/product1/C.png" />
+        <img class="thumb" src="images/product1/D.png" alt="Thumb D" data-large="images/product1/D.png" />
       </div>
     </div>
+
     <div class="product-info">
-      <h1 id="prodName" class="product-name">Tst product</h1>
-      <div id="prodPrice" class="price">Rs 500</div>
-      <div id="prodRating" class="rating">★★★☆☆</div>
-      <p id="prodDesc" class="description">
-        This is a simple product description for the Tst product. It tells
-        users about the features and qualities of the product.
-      </p>
+      <h1>Tst product</h1>
+      <p class="price">Rs 500</p>
+      <p class="rating">★★★☆☆</p>
+      <p class="description">This is a simple product description for the Tst product. It tells users about the features and qualities of the product.</p>
       <div class="buttons">
         <button class="btn add-to-cart">Add to Cart</button>
         <button class="btn buy-now">Buy Now</button>
       </div>
     </div>
-  </div>
-
-  <!-- Zoom modal for image zoom -->
-  <div id="zoomModal" class="zoom-modal" style="display:none;">
-    <img id="zoomImage" src="" alt="Zoomed Image" />
   </div>
 
   <script src="script.js"></script>
