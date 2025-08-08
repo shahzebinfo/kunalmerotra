@@ -1,35 +1,29 @@
-// Client state
-let product = null;
-let currentSlide = 0;
-
 // Helpers
 function $(sel) { return document.querySelector(sel); }
 function q(id) { return document.getElementById(id); }
-function formatINR(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
 
-// Load product from server (simulate here)
-function loadProduct() {
-  // For demo, you can hardcode product here or load via API
-  product = {
-    name: "Tst Product",
-    price: 500,
-    stock: 10,
-    description: "This is a test product description. High quality and great value!",
-    rating: 3,
-    images: [
-      "images/product1/A.png",
-      "images/product1/B.png",
-      "images/product1/C.png",
-      "images/product1/D.png"
-    ]
-  };
-  renderProduct();
+// Format Indian Rupees
+function formatINR(n) {
+  return '₹' + Number(n).toLocaleString('en-IN');
 }
 
-// Render product UI
-function renderProduct() {
-  if (!product) return;
+// Product data (simulate loading from server)
+const product = {
+  name: "Tst Product",
+  price: 500,
+  stock: 10,
+  description: "This is a test product description. High quality and great value!",
+  rating: 3,
+  images: [
+    "images/product1/A.png",
+    "images/product1/B.png",
+    "images/product1/C.png",
+    "images/product1/D.png"
+  ]
+};
 
+// Render product details and gallery
+function renderProduct() {
   q("prodName").innerText = product.name;
 
   // rating stars (full star: ★, empty star: ☆)
@@ -38,35 +32,32 @@ function renderProduct() {
   q("prodRating").innerText = stars + " (" + product.rating + ")";
 
   q("prodPrice").innerText = formatINR(product.price);
-  q("prodStock").innerText = "In stock: " + product.stock;
   q("prodDesc").innerText = product.description;
 
-  // Setup gallery
   const slides = q("slides");
   const thumbs = q("thumbs");
   slides.innerHTML = "";
   thumbs.innerHTML = "";
 
   product.images.forEach((src, i) => {
-    // Main image in scrollable slides
+    // Main images
     const img = document.createElement("img");
     img.src = src;
-    img.alt = product.name + " " + (i + 1);
+    img.alt = product.name + " Image " + (i + 1);
     img.onclick = () => showZoom(src);
     slides.appendChild(img);
 
-    // Thumbnails below
-    const t = document.createElement("img");
-    t.src = src;
-    t.alt = product.name + " thumb " + (i + 1);
-    t.onclick = () => scrollToImage(i);
-    if (i === 0) t.classList.add("active");
-    thumbs.appendChild(t);
+    // Thumbnails
+    const thumb = document.createElement("img");
+    thumb.src = src;
+    thumb.alt = product.name + " Thumb " + (i + 1);
+    thumb.onclick = () => scrollToImage(i);
+    if (i === 0) thumb.classList.add("active");
+    thumbs.appendChild(thumb);
   });
-  currentSlide = 0;
 }
 
-// Scroll main gallery to image index i
+// Scroll main gallery to image at index i
 function scrollToImage(i) {
   const slides = q("slides");
   const images = slides.querySelectorAll("img");
@@ -85,20 +76,21 @@ function highlightThumb(i) {
   });
 }
 
-// Zoom modal
+// Zoom modal show/hide
 function showZoom(src) {
   const modal = q("zoomModal");
   const img = q("zoomImage");
   img.src = src;
   modal.style.display = "flex";
 }
+
 function hideZoom() {
   q("zoomModal").style.display = "none";
 }
 
-// Initialize
-window.onload = function () {
-  loadProduct();
+// Init
+window.onload = () => {
+  renderProduct();
 
   // Close zoom modal on click
   q("zoomModal").addEventListener("click", hideZoom);
