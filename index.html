@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flipkart-Style Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>My Store</h1>
+    </header>
+
+    <section class="product-grid">
+        <!-- Product 1 -->
+        <div class="product-card">
+            <img src="https://via.placeholder.com/200" alt="Product 1">
+            <h3>Wireless Headphones</h3>
+            <p class="price">₹999</p>
+            <button onclick="buyNow('Wireless Headphones', 999)">Buy Now</button>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+            <img src="https://via.placeholder.com/200" alt="Product 2">
+            <h3>Smart Watch</h3>
+            <p class="price">₹1499</p>
+            <button onclick="buyNow('Smart Watch', 1499)">Buy Now</button>
+        </div>
+
+        <!-- Add more products here -->
+    </section>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
