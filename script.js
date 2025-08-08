@@ -1,10 +1,27 @@
-const imageFolder = 'images/product1/';
-const images = ['A.png', 'B.png', 'C.png', 'D.png'];
+// script.js
 
-const container = document.getElementById('imageScroll');
-images.forEach(imgName => {
-  const img = document.createElement('img');
-  img.src = imageFolder + imgName;
-  img.alt = 'Product Image';
-  container.appendChild(img);
+const slides = document.querySelectorAll('.slides img');
+const thumbs = document.querySelectorAll('.thumbnails .thumb');
+
+let currentIndex = 0;
+
+// Show the slide at index
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    slide.classList.toggle('active', i === index);
+  });
+  thumbs.forEach((thumb, i) => {
+    thumb.classList.toggle('active', i === index);
+  });
+  currentIndex = index;
+}
+
+// Clicking thumbnails changes slide
+thumbs.forEach((thumb, idx) => {
+  thumb.addEventListener('click', () => {
+    showSlide(idx);
+  });
 });
+
+// Initialize first slide
+showSlide(0);
