@@ -1,70 +1,77 @@
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+body {
   font-family: Arial, sans-serif;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 0 10px;
+  color: #111;
 }
-
-/* Navbar */
-.navbar {
-  background-color: #2874f0;
-  color: white;
+.image-scroll {
   display: flex;
-  align-items: center;
-  padding: 10px;
+  overflow-x: auto;
+  gap: 10px;
+  margin-bottom: 15px;
 }
-.logo {
-  font-size: 20px;
-  font-weight: bold;
-}
-.search-box {
-  flex: 1;
-  margin-left: 10px;
-  padding: 8px;
-  border: none;
-  border-radius: 4px;
-}
-
-/* Product Grid */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 15px;
-  padding: 15px;
-}
-.product-card {
-  border: 1px solid #ddd;
+.image-scroll img {
+  height: 180px;
   border-radius: 8px;
-  padding: 10px;
-  text-align: center;
-  background: white;
+  flex-shrink: 0;
+  cursor: pointer;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  transition: transform 0.3s ease;
 }
-.product-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
+.image-scroll img:hover {
+  transform: scale(1.05);
+  border-color: #2874f0;
+}
+h2 {
+  margin: 0 0 8px 0;
+  font-weight: 700;
 }
 .price {
-  color: green;
-  font-weight: bold;
-  margin: 8px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #b12704;
+  margin-bottom: 6px;
 }
-.buy-btn {
-  background: #fb641b;
-  color: white;
-  padding: 8px 12px;
+.rating {
+  margin-bottom: 10px;
+  color: #f5b400;
+  font-size: 18px;
+}
+.description {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  color: #333;
+}
+.buttons {
+  display: flex;
+  gap: 12px;
+}
+button {
+  flex: 1;
+  padding: 12px 0;
+  font-weight: 700;
+  border-radius: 6px;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
-.buy-btn:hover {
-  background: #d35400;
+.add-cart {
+  background-color: #fff;
+  border: 2px solid #2874f0;
+  color: #2874f0;
 }
-
-/* Mobile Friendly */
-@media (max-width: 600px) {
-  .search-box {
-    font-size: 14px;
-  }
+.add-cart:hover {
+  background-color: #2874f0;
+  color: white;
+}
+.buy-now {
+  background-color: #ff9f00;
+  color: white;
+}
+.buy-now:hover {
+  background-color: #e68a00;
 }
