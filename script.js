@@ -1,27 +1,123 @@
-// script.js
+// Client state
+let product = null;
+let currentSlide = 0;
 
-const slides = document.querySelectorAll('.slides img');
-const thumbs = document.querySelectorAll('.thumbnails .thumb');
+// Helpers
+function $(sel) { return document.querySelector(sel); }
+function q(id) { return document.getElementById(id); }
+function formatINR(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
 
-let currentIndex = 0;
-
-// Show the slide at index
-function showSlide(index) {
-  slides.forEach((slide, i) => {
-    slide.classList.toggle('active', i === index);
-  });
-  thumbs.forEach((thumb, i) => {
-    thumb.classList.toggle('active', i === index);
-  });
-  currentIndex = index;
+// Load product from server (simulate here)
+function loadProduct() {
+  // For demo, you can hardcode product here or load via API
+  product = {
+    name: "Tst Product",
+    price: 500,
+    stock: 10,
+    description: "This is a test product description. High quality and great value!",
+    rating: 3,
+    images: [
+      "images/product1/A.png",
+      "images/product1/B.png",
+      "images/product1/C.png",
+      "images/product1/D.png"
+    ]
+  };
+  renderProduct();
 }
 
-// Clicking thumbnails changes slide
-thumbs.forEach((thumb, idx) => {
-  thumb.addEventListener('click', () => {
-    showSlide(idx);
-  });
-});
+// Render product UI
+function renderProduct() {
+  if (!product) return;
 
-// Initialize first slide
-showSlide(0);
+  q("prodName").innerText = product.name;
+
+  // rating stars (full star: ★, empty star: ☆)
+  const fullStars = Math.floor(product.rating);
+  const stars = "★".repeat(fullStars) + "☆".repeat(5 - fullStars);
+  q("prodRating").innerText = stars + " (" + product.rating + ")";
+
+  q("prodPrice").innerText = formatINR(product.price);
+  q("prodStock").innerText = "In stock: " + product.stock;
+  q("prodDesc").innerText = product.description;
+
+  // Setup gallery
+  const slides = q("slides");
+  const thumbs = q("thumbs");
+  slides.innerHTML = "";
+  thumbs.innerHTML = "";
+
+  product.images.forEach((src, i) => {
+    // Main image in scrollable slides
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = product.name + " " + (i + 1);
+    img.onclick = () => showZoom(src);
+    slides.appendChild(img);
+
+    // Thumbnails below
+    const t = document.createElement("img");
+    t.src = src;
+    t.alt = product.name + " thumb " + (i + 1);
+    t.onclick = () => scrollToImage(i);
+    if (i === 0) t.classList.add("active");
+    thumbs.appendChild(t);
+  });
+  currentSlide = 0;
+}
+
+// Scroll main gallery to image index i
+function scrollToImage(i) {
+  const slides = q("slides");
+  const images = slides.querySelectorAll("img");
+  if (images[i]) {
+    images[i].scrollIntoView({ behavior: "smooth", inline: "center" });
+  }
+  highlightThumb(i);
+}
+
+// Highlight active thumbnail
+function highlightThumb(i) {
+  const thumbs = q("thumbs").querySelectorAll("img");
+  thumbs.forEach((t, idx) => {
+    if (idx === i) t.classList.add("active");
+    else t.classList.remove("active");
+  });
+}
+
+// Zoom modal
+function showZoom(src) {
+  const modal = q("zoomModal");
+  const img = q("zoomImage");
+  img.src = src;
+  modal.style.display = "flex";
+}
+function hideZoom() {
+  q("zoomModal").style.display = "none";
+}
+
+// Initialize
+window.onload = function () {
+  loadProduct();
+
+  // Close zoom modal on click
+  q("zoomModal").addEventListener("click", hideZoom);
+
+  // Update thumbnail highlight on main gallery scroll
+  const slides = q("slides");
+  slides.addEventListener("scroll", () => {
+    const images = slides.querySelectorAll("img");
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+    const scrollLeft = slides.scrollLeft;
+    images.forEach((img, idx) => {
+      const offset = img.offsetLeft;
+      const distance = Math.abs(offset - scrollLeft);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = idx;
+      }
+    });
+    highlightThumb(closestIndex);
+  });
+};
