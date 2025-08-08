@@ -1,9 +1,9 @@
 const imageFolder = 'image/product1/';
 const images = [
-  '1.jpg',
-  '2.jpg',
-  '3.jpg',
-  '4.jpg'
+  'A.png',
+  'B.png',
+  'C.png',
+  'D.png'
   // Apne images ke naam yahan add karen
 ];
 
@@ -14,3 +14,4 @@ images.forEach(imgName => {
   img.alt = 'Product Image';
   container.appendChild(img);
 });
+
