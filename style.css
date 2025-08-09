@@ -160,3 +160,53 @@ h1 {
   color: #2874f0;
   user-select: none;
 }
+
+
+
+/* Desktop navigation */
+.main-nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Hide menu on small screens */
+@media (max-width: 768px) {
+  .main-nav {
+    display: none; /* hide nav by default on mobile */
+    flex-direction: column;
+    background: white;
+    position: absolute;
+    top: 60px; /* below header */
+    right: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 200px;
+    z-index: 1000;
+  }
+
+  .main-nav.open {
+    display: flex; /* show nav when open */
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .menu-toggle {
+    display: block;
+    font-size: 28px;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+}
+
+/* Desktop: hide hamburger */
+.menu-toggle {
+  display: none;
+}
