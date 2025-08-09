@@ -2,7 +2,7 @@
 #productsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
+  gap: 40px 20px;
   max-width: 1200px;
   margin: 30px auto;
   padding: 0 15px;
@@ -165,3 +165,4 @@
   background: #2874f0;
   border-radius: 3px;
 }
+
