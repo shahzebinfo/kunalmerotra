@@ -166,4 +166,121 @@
   border-radius: 3px;
 }
 
+/* Container for header */
+.site-header {
+  background-color: #2874f0;
+  color: white;
+  padding: 10px 15px;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.site-header .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  font-size: 1.7rem;
+  font-weight: 700;
+  user-select: none;
+}
+.logo .dot {
+  color: #ff9f00;
+}
+
+/* Navigation menu */
+.main-nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.main-nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+.main-nav ul li a:hover {
+  color: #ff9f00;
+}
+
+/* Search box */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.search-box input[type="search"] {
+  padding: 6px 10px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  width: 180px;
+  font-size: 1rem;
+}
+.search-box button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Hamburger menu toggle - hidden on desktop */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+  .main-nav {
+    display: none; /* Hide nav by default */
+    flex-direction: column;
+    background: #2874f0;
+    position: absolute;
+    top: 60px;
+    right: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    width: 200px;
+    z-index: 1000;
+  }
+
+  .main-nav.open {
+    display: flex;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .search-box {
+    display: none; /* Hide search on mobile for now (optional) */
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
 
