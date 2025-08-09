@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   const products = [
     {
-      name: "Product 1",
-      price: 500,
-      rating: 3,
-      description: "High quality product 1 with great features.",
+      name: "Diya",
+      price: 350,
+      rating: 4,
+      description: "Elegant handcrafted diya to light up your celebrations.",
       images: [
         "images/product1/A.png",
         "images/product1/B.png",
@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     },
     {
-      name: "Product 2",
-      price: 700,
-      rating: 4,
-      description: "Amazing product 2 loved by everyone.",
+      name: "Ram idol",
+      price: 1200,
+      rating: 5,
+      description: "Beautiful Ram idol made from brass, perfect for your pooja room.",
       images: [
         "images/product2/A.png",
         "images/product2/B.png",
@@ -24,12 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
         "images/product2/D.png"
       ]
     },
-    // Add all 10 products similarly:
     {
-      name: "Product 3",
-      price: 600,
-      rating: 5,
-      description: "Top rated product 3 with awesome features.",
+      name: "Brass glasses",
+      price: 800,
+      rating: 4,
+      description: "Set of 4 brass glasses, ideal for traditional drinks.",
       images: [
         "images/product3/A.png",
         "images/product3/B.png",
@@ -38,10 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     },
     {
-      name: "Product 4",
-      price: 450,
-      rating: 3,
-      description: "Affordable and durable product 4.",
+      name: "Brass radha krishna",
+      price: 1500,
+      rating: 5,
+      description: "Beautiful brass Radha Krishna statue with intricate details.",
       images: [
         "images/product4/A.png",
         "images/product4/B.png",
@@ -50,10 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     },
     {
-      name: "Product 5",
-      price: 850,
+      name: "Brass shiv parivaar",
+      price: 2000,
       rating: 4,
-      description: "Premium quality product 5 for your needs.",
+      description: "Brass statue of Shiv Parivaar, perfect for worship and gifting.",
       images: [
         "images/product5/A.png",
         "images/product5/B.png",
@@ -62,10 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     },
     {
-      name: "Product 6",
-      price: 300,
-      rating: 2,
-      description: "Budget friendly product 6 with great value.",
+      name: "Brass flower pot",
+      price: 600,
+      rating: 3,
+      description: "Decorative brass flower pot for indoor plants.",
       images: [
         "images/product6/A.png",
         "images/product6/B.png",
@@ -74,10 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     },
     {
-      name: "Product 7",
-      price: 550,
+      name: "Brass cooker",
+      price: 1800,
       rating: 4,
-      description: "Popular product 7 with amazing performance.",
+      description: "Premium brass cooker for traditional cooking styles.",
       images: [
         "images/product7/A.png",
         "images/product7/B.png",
@@ -86,10 +85,10 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     },
     {
-      name: "Product 8",
-      price: 750,
-      rating: 5,
-      description: "Highly recommended product 8.",
+      name: "Brass candle holder",
+      price: 400,
+      rating: 3,
+      description: "Elegant brass candle holder for home décor.",
       images: [
         "images/product8/A.png",
         "images/product8/B.png",
@@ -98,10 +97,10 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     },
     {
-      name: "Product 9",
-      price: 620,
-      rating: 3,
-      description: "Reliable product 9 with good reviews.",
+      name: "Brass pot",
+      price: 900,
+      rating: 4,
+      description: "Traditional brass pot suitable for multiple uses.",
       images: [
         "images/product9/A.png",
         "images/product9/B.png",
@@ -110,10 +109,10 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     },
     {
-      name: "Product 10",
-      price: 900,
+      name: "Brass cutlery",
+      price: 1100,
       rating: 5,
-      description: "Top of the line product 10 for experts.",
+      description: "Complete set of brass cutlery for your dining needs.",
       images: [
         "images/product10/A.png",
         "images/product10/B.png",
@@ -131,16 +130,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return "★".repeat(fullStars) + "☆".repeat(emptyStars);
   }
 
-  products.forEach((product, index) => {
-    // Create product card div
+  products.forEach((product) => {
     const card = document.createElement("div");
     card.classList.add("product-card");
 
-    // Create gallery div
     const gallery = document.createElement("div");
     gallery.classList.add("gallery");
 
-    // Main image container
     const mainImageDiv = document.createElement("div");
     mainImageDiv.classList.add("main-image");
 
@@ -149,30 +145,25 @@ document.addEventListener("DOMContentLoaded", () => {
     mainImage.alt = product.name + " Main Image";
     mainImageDiv.appendChild(mainImage);
 
-    // Thumbnails container
     const thumbsDiv = document.createElement("div");
     thumbsDiv.classList.add("thumbnails");
 
     product.images.forEach((imgSrc, i) => {
       const thumb = document.createElement("img");
       thumb.src = imgSrc;
-      thumb.alt = product.name + " Thumb " + (i+1);
-      if(i === 0) thumb.classList.add("active");
+      thumb.alt = product.name + " Thumb " + (i + 1);
+      if (i === 0) thumb.classList.add("active");
       thumb.addEventListener("click", () => {
-        // Remove active class from all thumbs for this product
         thumbsDiv.querySelectorAll("img").forEach(t => t.classList.remove("active"));
-        // Add active to clicked thumb
         thumb.classList.add("active");
-        // Change main image src
         mainImage.src = imgSrc;
         mainImage.classList.remove("zoomed");
       });
       thumbsDiv.appendChild(thumb);
     });
 
-    // Zoom on main image click
     mainImage.addEventListener("click", () => {
-      if(mainImage.classList.contains("zoomed")){
+      if (mainImage.classList.contains("zoomed")) {
         mainImage.classList.remove("zoomed");
       } else {
         mainImage.classList.add("zoomed");
@@ -182,7 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
     gallery.appendChild(mainImageDiv);
     gallery.appendChild(thumbsDiv);
 
-    // Product info div
     const infoDiv = document.createElement("div");
     infoDiv.classList.add("product-info");
 
