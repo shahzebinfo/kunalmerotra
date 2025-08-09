@@ -124,106 +124,152 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const productsGrid = document.getElementById("productsGrid");
 
+  // For filtering and sorting we keep a current array to display
+  let currentProducts = [...products];
+
   function createStarRating(rating) {
     const fullStars = Math.floor(rating);
     const emptyStars = 5 - fullStars;
     return "★".repeat(fullStars) + "☆".repeat(emptyStars);
   }
 
-  products.forEach((product) => {
-    const card = document.createElement("div");
-    card.classList.add("product-card");
+  function renderProducts(productsArray) {
+    productsGrid.innerHTML = ""; // Clear existing
+    productsArray.forEach((product) => {
+      const card = document.createElement("div");
+      card.classList.add("product-card");
 
-    const gallery = document.createElement("div");
-    gallery.classList.add("gallery");
+      const gallery = document.createElement("div");
+      gallery.classList.add("gallery");
 
-    const mainImageDiv = document.createElement("div");
-    mainImageDiv.classList.add("main-image");
+      const mainImageDiv = document.createElement("div");
+      mainImageDiv.classList.add("main-image");
 
-    const mainImage = document.createElement("img");
-    mainImage.src = product.images[0];
-    mainImage.alt = product.name + " Main Image";
-    mainImageDiv.appendChild(mainImage);
+      const mainImage = document.createElement("img");
+      mainImage.src = product.images[0];
+      mainImage.alt = product.name + " Main Image";
+      mainImageDiv.appendChild(mainImage);
 
-    const thumbsDiv = document.createElement("div");
-    thumbsDiv.classList.add("thumbnails");
+      const thumbsDiv = document.createElement("div");
+      thumbsDiv.classList.add("thumbnails");
 
-    product.images.forEach((imgSrc, i) => {
-      const thumb = document.createElement("img");
-      thumb.src = imgSrc;
-      thumb.alt = product.name + " Thumb " + (i + 1);
-      if (i === 0) thumb.classList.add("active");
-      thumb.addEventListener("click", () => {
-        thumbsDiv.querySelectorAll("img").forEach(t => t.classList.remove("active"));
-        thumb.classList.add("active");
-        mainImage.src = imgSrc;
-        mainImage.classList.remove("zoomed");
+      product.images.forEach((imgSrc, i) => {
+        const thumb = document.createElement("img");
+        thumb.src = imgSrc;
+        thumb.alt = product.name + " Thumb " + (i + 1);
+        if (i === 0) thumb.classList.add("active");
+        thumb.addEventListener("click", () => {
+          thumbsDiv.querySelectorAll("img").forEach(t => t.classList.remove("active"));
+          thumb.classList.add("active");
+          mainImage.src = imgSrc;
+          mainImage.classList.remove("zoomed");
+        });
+        thumbsDiv.appendChild(thumb);
       });
-      thumbsDiv.appendChild(thumb);
-    });
 
-    mainImage.addEventListener("click", () => {
-      if (mainImage.classList.contains("zoomed")) {
-        mainImage.classList.remove("zoomed");
+      mainImage.addEventListener("click", () => {
+        if (mainImage.classList.contains("zoomed")) {
+          mainImage.classList.remove("zoomed");
+        } else {
+          mainImage.classList.add("zoomed");
+        }
+      });
+
+      gallery.appendChild(mainImageDiv);
+      gallery.appendChild(thumbsDiv);
+
+      const infoDiv = document.createElement("div");
+      infoDiv.classList.add("product-info");
+
+      const nameEl = document.createElement("h2");
+      nameEl.classList.add("product-name");
+      nameEl.textContent = product.name;
+
+      const priceEl = document.createElement("p");
+      priceEl.classList.add("price");
+      priceEl.textContent = `Rs ${product.price}`;
+
+      const ratingEl = document.createElement("p");
+      ratingEl.classList.add("rating");
+      ratingEl.textContent = createStarRating(product.rating);
+
+      const descEl = document.createElement("p");
+      descEl.classList.add("description");
+      descEl.textContent = product.description;
+
+      const buttonsDiv = document.createElement("div");
+      buttonsDiv.classList.add("buttons");
+
+      const addBtn = document.createElement("button");
+      addBtn.classList.add("btn", "btn-add");
+      addBtn.textContent = "Add to Cart";
+
+      const buyBtn = document.createElement("button");
+      buyBtn.classList.add("btn", "btn-buy");
+      buyBtn.textContent = "Buy Now";
+
+      buttonsDiv.appendChild(addBtn);
+      buttonsDiv.appendChild(buyBtn);
+
+      infoDiv.appendChild(nameEl);
+      infoDiv.appendChild(priceEl);
+      infoDiv.appendChild(ratingEl);
+      infoDiv.appendChild(descEl);
+      infoDiv.appendChild(buttonsDiv);
+
+      card.appendChild(gallery);
+      card.appendChild(infoDiv);
+
+      productsGrid.appendChild(card);
+    });
+  }
+
+  // Initial render
+  renderProducts(currentProducts);
+
+  // Hamburger menu toggle
+  const hamburger = document.getElementById('menuToggle');
+  const navMenu = document.getElementById('mainNav');
+
+  if(hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('open');
+    });
+  }
+
+  // Sort by Price
+  const sortPriceBtn = document.getElementById("sortPrice");
+  if(sortPriceBtn) {
+    sortPriceBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      currentProducts.sort((a, b) => a.price - b.price);
+      renderProducts(currentProducts);
+    });
+  }
+
+  // Sort by Name
+  const sortNameBtn = document.getElementById("sortName");
+  if(sortNameBtn) {
+    sortNameBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      currentProducts.sort((a, b) => a.name.localeCompare(b.name));
+      renderProducts(currentProducts);
+    });
+  }
+
+  // Search products
+  const searchInput = document.getElementById("searchInput");
+  if(searchInput) {
+    searchInput.addEventListener("input", () => {
+      const term = searchInput.value.trim().toLowerCase();
+      if(term === "") {
+        renderProducts(products);
+        currentProducts = [...products];
       } else {
-        mainImage.classList.add("zoomed");
+        const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+        currentProducts = filtered;
+        renderProducts(filtered);
       }
     });
-
-    gallery.appendChild(mainImageDiv);
-    gallery.appendChild(thumbsDiv);
-
-    const infoDiv = document.createElement("div");
-    infoDiv.classList.add("product-info");
-
-    const nameEl = document.createElement("h2");
-    nameEl.classList.add("product-name");
-    nameEl.textContent = product.name;
-
-    const priceEl = document.createElement("p");
-    priceEl.classList.add("price");
-    priceEl.textContent = `Rs ${product.price}`;
-
-    const ratingEl = document.createElement("p");
-    ratingEl.classList.add("rating");
-    ratingEl.textContent = createStarRating(product.rating);
-
-    const descEl = document.createElement("p");
-    descEl.classList.add("description");
-    descEl.textContent = product.description;
-
-    const buttonsDiv = document.createElement("div");
-    buttonsDiv.classList.add("buttons");
-
-    const addBtn = document.createElement("button");
-    addBtn.classList.add("btn", "btn-add");
-    addBtn.textContent = "Add to Cart";
-
-    const buyBtn = document.createElement("button");
-    buyBtn.classList.add("btn", "btn-buy");
-    buyBtn.textContent = "Buy Now";
-
-    buttonsDiv.appendChild(addBtn);
-    buttonsDiv.appendChild(buyBtn);
-
-    infoDiv.appendChild(nameEl);
-    infoDiv.appendChild(priceEl);
-    infoDiv.appendChild(ratingEl);
-    infoDiv.appendChild(descEl);
-    infoDiv.appendChild(buttonsDiv);
-
-    card.appendChild(gallery);
-    card.appendChild(infoDiv);
-
-    productsGrid.appendChild(card);
-  });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const hamburger = document.getElementById('hamburgerBtn');
-  const navMenu = document.getElementById('navMenu');
-
-  hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-  });
+  }
 });
