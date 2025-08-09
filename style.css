@@ -1,212 +1,169 @@
-/* Reset and base */
-* {
-  box-sizing: border-box;
-}
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #fafafa;
-  color: #111;
-}
-
-/* Container */
-.container {
+/* Container for all products */
+#productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px 20px;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 30px auto;
   padding: 0 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Each product card */
+.product-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Site Header */
-.site-header {
-  background-color: #2874f0; /* Flipkart blue */
-  color: #fff;
-  padding: 10px 0;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* Logo */
-.logo {
-  font-weight: 900;
-  font-size: 1.8rem;
-  user-select: none;
-}
-.logo .dot {
-  color: #ff9f00; /* accent yellow */
-}
-
-/* Navigation */
-.main-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 30px;
-}
-
-.main-nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: color 0.3s ease;
-  user-select: none;
-}
-
-.main-nav ul li a:hover,
-.main-nav ul li a:focus {
-  color: #ff9f00;
-  outline: none;
-}
-
-/* Search box */
-.search-box {
+/* Gallery inside card */
+.gallery {
   position: relative;
-  display: flex;
-  align-items: center;
-  margin-left: 20px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
 }
 
-.search-box input[type="search"] {
-  padding: 6px 35px 6px 12px;
-  border-radius: 20px;
-  border: none;
-  font-size: 1rem;
-  outline: none;
-  transition: box-shadow 0.3s ease;
-}
-
-.search-box input[type="search"]:focus {
-  box-shadow: 0 0 8px 2px #ff9f00;
-}
-
-.search-box button {
-  position: absolute;
-  right: 5px;
-  background: transparent;
-  border: none;
-  color: #2874f0;
-  font-size: 1.2rem;
-  cursor: pointer;
-  user-select: none;
-  transition: color 0.3s ease;
-}
-
-.search-box button:hover {
-  color: #ff9f00;
-}
-
-/* Hamburger menu toggle (hidden on desktop) */
-.menu-toggle {
-  display: none;
-  background: transparent;
-  border: none;
-  font-size: 2rem;
-  color: white;
-  cursor: pointer;
-  user-select: none;
-  margin-left: 15px;
-}
-
-/* Responsive styles */
-@media (max-width: 900px) {
-  .container {
-    justify-content: space-between;
-  }
-  .main-nav {
-    width: 100%;
-    order: 3;
-    margin-top: 10px;
-  }
-  .main-nav ul {
-    flex-direction: column;
-    gap: 15px;
-    background: #2874f0;
-    padding: 15px 20px;
-    border-radius: 0 0 15px 15px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-  }
-  .main-nav.open ul {
-    max-height: 400px; /* enough height to show links */
-  }
-  .search-box {
-    order: 2;
-    margin-left: 0;
-    margin-top: 10px;
-    width: 100%;
-  }
-  .search-box input[type="search"] {
-    width: 100%;
-  }
-  .menu-toggle {
-    display: block;
-    order: 1;
-  }
-}
-
-/* Fix the h1 under header */
-h1 {
+/* Main image container */
+.main-image {
   text-align: center;
-  margin: 25px 0 15px;
+  margin-bottom: 10px;
+}
+.main-image img {
+  max-width: 100%;
+  max-height: 240px;
+  object-fit: contain;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+  user-select: none;
+}
+.main-image img.zoomed {
+  transform: scale(2);
+  cursor: zoom-out;
+}
+.main-image img:not(.zoomed) {
+  cursor: zoom-in;
+}
+
+/* Thumbnails container */
+.thumbnails {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+.thumbnails img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.25s ease;
+  user-select: none;
+}
+.thumbnails img.active {
+  border-color: #2874f0; /* Flipkart blue */
+}
+
+/* Product info */
+.product-info {
+  padding: 20px 20px 25px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-name {
+  font-size: 1.3rem;
   font-weight: 700;
-  color: #2874f0;
+  color: #111;
+  margin: 0 0 8px;
+  line-height: 1.2;
   user-select: none;
 }
 
+.price {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #b12704; /* Amazon-like red */
+  margin-bottom: 8px;
+  user-select: none;
+}
 
+.rating {
+  font-size: 1rem;
+  color: #f5b400; /* Gold stars */
+  margin-bottom: 12px;
+  user-select: none;
+}
 
-/* Desktop navigation */
-.main-nav ul {
+.description {
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.4;
+  flex-grow: 1;
+  margin-bottom: 18px;
+  user-select: none;
+}
+
+/* Buttons container */
+.buttons {
   display: flex;
-  gap: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  gap: 12px;
 }
 
-/* Hide menu on small screens */
-@media (max-width: 768px) {
-  .main-nav {
-    display: none; /* hide nav by default on mobile */
-    flex-direction: column;
-    background: white;
-    position: absolute;
-    top: 60px; /* below header */
-    right: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    width: 200px;
-    z-index: 1000;
-  }
-
-  .main-nav.open {
-    display: flex; /* show nav when open */
-  }
-
-  .main-nav ul {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .menu-toggle {
-    display: block;
-    font-size: 28px;
-    cursor: pointer;
-    background: none;
-    border: none;
-  }
+.btn {
+  flex: 1;
+  padding: 12px 0;
+  font-weight: 700;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+  box-shadow: 0 4px 10px rgba(40, 116, 240, 0.25);
+  color: #fff;
+  font-size: 1rem;
+}
+.btn-add {
+  background-color: #2874f0; /* Flipkart blue */
+}
+.btn-add:hover {
+  background-color: #1c54b2;
+}
+.btn-buy {
+  background-color: #ff9f00; /* Accent yellow */
+  color: #111;
+  box-shadow: 0 4px 10px rgba(255, 159, 0, 0.35);
+}
+.btn-buy:hover {
+  background-color: #cc7a00;
+  color: #fff;
 }
 
-/* Desktop: hide hamburger */
-.menu-toggle {
-  display: none;
+/* Scrollbar styling for thumbnails */
+.thumbnails::-webkit-scrollbar {
+  height: 6px;
 }
+.thumbnails::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+.thumbnails::-webkit-scrollbar-thumb {
+  background: #2874f0;
+  border-radius: 3px;
+}
+
+
